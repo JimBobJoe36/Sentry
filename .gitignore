@@ -1,3 +1,2 @@
-logs.txt
-trustedPrograms.txt
-__pycache__
+trustedLogs/
+__pycache__/
