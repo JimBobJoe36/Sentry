@@ -15,5 +15,3 @@ def updateLog():
         print("Download log updated (see 'Documents/Sentry/SecureFiles/trustedLogs/logs.txt' to view)")
         theFile.close()
 
-def detectDownloadChange():
-    pass
