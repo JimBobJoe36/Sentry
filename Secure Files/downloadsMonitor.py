@@ -18,6 +18,6 @@ def save_downloads_filenames():
             for filename in files:
                 file.write(filename + "\n")
         
-        print(f"File names saved successfully to: {save_path}")
+        print(f"Downloads saved.")
     except Exception as e:
         print(f"An error occurred: {e}")
