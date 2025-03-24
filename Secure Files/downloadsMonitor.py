@@ -21,3 +21,5 @@ def save_downloads_filenames():
         print(f"Downloads saved.")
     except Exception as e:
         print(f"An error occurred: {e}")
+def checkDownloads():
+    pass
