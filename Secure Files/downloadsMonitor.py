@@ -23,3 +23,7 @@ def save_downloads_filenames():
         print(f"An error occurred: {e}")
 def checkDownloads():
     pass
+    user = getpass.getuser()
+    downloads_path = os.path.join("C:\\Users", user, "Downloads")
+    files = os.listdir(downloads_path)
+    
