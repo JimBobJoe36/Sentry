@@ -13,3 +13,5 @@ downloads_size = os.stat(downloads).st_size
 updateLog(reasons)
 if downloads_size == 0:
     save_downloads_filenames()
+else:
+    checkDownloads()
