@@ -11,7 +11,7 @@ def updateLog(reason):
         theFile.close()
     except FileExistsError:
         theFile = open("C:/Users/" + user + "/Documents/Sentry/Secure Files/trustedLogs/logs.txt","a")
-        theFile.write(now + "\n")
+        theFile.write(log + "\n")
         print("Download log updated (see 'Documents/Sentry/SecureFiles/trustedLogs/logs.txt' to view)")
         theFile.close()
 
