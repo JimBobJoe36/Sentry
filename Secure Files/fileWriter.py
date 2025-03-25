@@ -1,12 +1,11 @@
 import os
 from datetime import datetime
-def updateLog():
+def updateLog(reason):
     user = os.getlogin()
     now = str(datetime.now())
-    print(now)
     try:
         theFile = open("C:/Users/" + user + "/Documents/Sentry/Secure Files/trustedLogs/logs.txt","x")
-        theFile.write(now)
+        theFile.write(reason, now)
         print("Something deleted the logs. I had to re-make it, so please check your computer.")
         theFile.close()
     except FileExistsError:

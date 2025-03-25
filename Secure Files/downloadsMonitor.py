@@ -1,6 +1,7 @@
 import os
 import getpass
-
+from fileWriter import updateLog
+reason = "Changed Download"
 def save_downloads_filenames():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
@@ -19,6 +20,7 @@ def save_downloads_filenames():
                 file.write(filename + "\n")
         
         print(f"Downloads saved.")
+        updateLog(reason)
     except Exception as e:
         print(f"An error occurred: {e}")
 def checkDownloads():
@@ -26,4 +28,11 @@ def checkDownloads():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
     files = os.listdir(downloads_path)
+    downloads = open("C://Users/" + user + "/Documents/Sentry/Secure Files/trustedLogs/downloads.txt")
+    if files != downloads:
+        print("It appears you have downloaded a new file, or have had a file moved from downloads.")
+        x = input("Do you want to update downloads.txt? [Y] or [N]")
+        if x == "Y" or x == "y":
+            save_downloads_filenames()
+    downloads.close()
     
