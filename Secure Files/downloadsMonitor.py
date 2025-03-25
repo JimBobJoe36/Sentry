@@ -1,7 +1,7 @@
 import os
 import getpass
 from fileWriter import updateLog
-reason = "Changed Download"
+reasons = "Changed Download"
 def save_downloads_filenames():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
@@ -20,7 +20,7 @@ def save_downloads_filenames():
                 file.write(filename + "\n")
         
         print(f"Downloads saved.")
-        updateLog(reason)
+        updateLog(reasons)
     except Exception as e:
         print(f"An error occurred: {e}")
 def checkDownloads():
