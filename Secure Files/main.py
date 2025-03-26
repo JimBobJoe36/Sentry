@@ -1,12 +1,13 @@
-import os
 from fileWriter import updateLog
 from downloadsMonitor import save_downloads_filenames, checkDownloads
-import getpass
+import getpass, random, os
+from time import sleep
 
-reasons = "booted up"
+reasons = "Booted Up"
 user = os.getlogin()
 downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "Secure Files", "trustedLogs", "downloads.txt")
 downloads_size = os.stat(downloads).st_size
+tick = random.randint(0, 100) / 100
 # Procedures
 
 

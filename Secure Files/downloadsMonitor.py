@@ -24,7 +24,6 @@ def save_downloads_filenames():
     except Exception as e:
         print(f"An error occurred: {e}")
 def checkDownloads():
-    pass
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
     files = os.listdir(downloads_path)
