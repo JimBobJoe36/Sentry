@@ -26,12 +26,21 @@ def save_downloads_filenames():
 def checkDownloads():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
-    files = os.listdir(downloads_path)
-    downloads = open("C://Users/" + user + "/Documents/Sentry/Secure Files/trustedLogs/downloads.txt")
-    if files != downloads:
-        print("It appears you have downloaded a new file, or have had a file moved from downloads.")
-        x = input("Do you want to update downloads.txt? [Y] or [N]")
-        if x == "Y" or x == "y":
-            save_downloads_filenames()
-    downloads.close()
+    files = set(os.listdir(downloads_path))  # Convert to set for easier comparison
+
+    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "Secure Files", "trustedLogs", "downloads.txt")
+
+    try:
+        with open(save_path, "r", encoding="utf-8") as f:
+            saved_files = set(line.strip() for line in f)  # Read lines, stripping whitespace/newlines
+
+        if files != saved_files:  # Correctly compare sets of filenames
+            print("It appears you have downloaded a new file, or have had a file moved from downloads.")
+            x = input("Do you want to update downloads.txt? [Y] or [N] ")
+            if x.lower() == "y":
+                save_downloads_filenames()
+
+    except FileNotFoundError:
+        print("downloads.txt not found. Creating a new one.")
+        save_downloads_filenames()
     
