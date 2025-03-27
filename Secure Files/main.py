@@ -1,6 +1,6 @@
 from fileWriter import updateLog
 from downloadsMonitor import save_downloads_filenames, checkDownloads
-import getpass, random, os
+import getpass, random, os, keyboard
 from time import sleep
 
 
@@ -24,3 +24,5 @@ while True:
     checkDownloads()
     sleep(tick)
     tick = random.randint(0, 100) / 100
+    if keyboard.is_pressed(']'): # Checks if the 'a' key is pressed
+        break # Exit the loop if 'a' is pressed
