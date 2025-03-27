@@ -1,8 +1,6 @@
 import os
 import getpass
 from fileWriter import updateLog
-import pygetwindow as gw
-import win32gui, win32con
 reasons = "Changed Download"
 def save_downloads_filenames():
     user = getpass.getuser()
@@ -37,7 +35,6 @@ def checkDownloads():
             saved_files = set(line.strip() for line in f)  # Read lines, stripping whitespace/newlines
 
         if files != saved_files:  # Correctly compare sets of filenames
-            win32gui.SetForegroundWindow(hwnd)
             print("It appears you have downloaded a new file, or have had a file moved from downloads.")
             x = input("Do you want to update downloads.txt? [Y] or [N] ")
             if x.lower() == "y":
