@@ -13,4 +13,5 @@ To use, make sure to have Python installed, and open Powershell. Make sure you a
 To terminate the program, either press and hold "]", terminate Powershell, or kill it in the Task Manager.
 # Roadmap
 1.0.0 -- <s>Successfully saves downloads and updates logs</s>\
-1.0.1 -- <s>Successfully compares the downloads.txt to the current downloads to check for new items</s>
+1.1.0 -- <s>Successfully compares the downloads.txt to the current downloads to check for new items</s> **Current Version**\
+1.1.1 -- Successfully prevents unwanted downloads (hopefully pauses the moment it realizes)
