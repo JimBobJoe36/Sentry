@@ -14,7 +14,7 @@ tick = random.randint(0, 100) / 100
 
 # Boot-up
 updateLog(reasons)
-if downloads_size > 2:
+if downloads_size < 2:
     save_downloads_filenames()
 else:
     print("Welcome back " + user + "!")
