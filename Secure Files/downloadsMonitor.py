@@ -1,6 +1,7 @@
 import os
 import getpass
 from fileWriter import updateLog
+
 reasons = "Changed Download"
 def save_downloads_filenames():
     user = getpass.getuser()
