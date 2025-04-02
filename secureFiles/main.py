@@ -1,6 +1,6 @@
 from fileWriter import updateLog
 from downloadsMonitor import save_downloads_filenames, checkDownloads
-import getpass, random, os, keyboard
+import getpass, random, os, keyboard # Auto-run "pip install ______"
 from time import sleep
 
 reasons = "Booted Up"

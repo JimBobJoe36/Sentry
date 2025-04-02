@@ -23,7 +23,7 @@ def get_file_hash(filepath, algorithm="SHA256"):
 def save_downloads_filenames():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
-    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "Secure Files", "trustedLogs", "downloads.txt")
+    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
     
     try:
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -45,7 +45,7 @@ def save_downloads_filenames():
 def checkDownloads():
     user = getpass.getuser()
     downloads_path = os.path.join("C:\\Users", user, "Downloads")
-    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "Secure Files", "trustedLogs", "downloads.txt")
+    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
     
     try:
         with open(save_path, "r", encoding="utf-8") as f:
