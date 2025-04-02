@@ -5,10 +5,12 @@ In order to make this work, follow the following steps:\
 &nbsp; &nbsp; 1. Download Sentry on an Administrator\
 &nbsp; &nbsp; 2. Go to Downloads\
 &nbsp; &nbsp; 3. Move the "Sentry-main" folder to Documents\
-&nbsp; &nbsp; 4. Rename the "Sentry-main" to "Sentry"
+**Important!**\
+&nbsp; &nbsp; 4. Rename the "Sentry-main" to "Sentry"\
 **Important!**\
 Do NOT put the Sentry folder in any other folder, other than Documents!\
-To use, make sure to have Python installed, and open Powershell. Make sure you are in the directory of "Secure Files", and do "python main.py" in Powershell\
+Run command "pip install keyboard"\
+To use, make sure to have Python installed, and open Powershell. Make sure you are in the directory of "Secure Files", and do "python main.py" in Powershell (Must be in correct directory)\
 <br>
 To terminate the program, either press and hold "]", terminate Powershell, or kill it in the Task Manager.
 # Roadmap
