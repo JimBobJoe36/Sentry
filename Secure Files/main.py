@@ -16,6 +16,7 @@ if downloads_size < 2:
     save_downloads_filenames()
 else:
     print("Welcome back", user + "!")
+    print("Please wait, as we are checking the downloads... This may take a while.")
     checkDownloads()
 
 while True:
