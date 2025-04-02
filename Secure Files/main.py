@@ -19,6 +19,7 @@ else:
     checkDownloads()
 
 while True:
+    print("Please wait, as we are checking the downloads... This may take a while.")
     checkDownloads()
     sleep(tick)
     tick = random.randint(0, 100) / 100
