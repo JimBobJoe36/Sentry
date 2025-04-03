@@ -1,13 +1,22 @@
 from fileWriter import updateLog
 from downloadsMonitor import save_downloads_filenames, checkDownloads
-import getpass, random, os, keyboard # Auto-run "pip install ______"
+import getpass, random, os # Auto-run "pip install ______"
 from time import sleep
-
+import subprocess
+import sys
+try:
+    import keyboard
+except ImportError:
+    install('keyboard')
+    import keyboard
 reasons = "Booted Up"
 user = os.getlogin()
 downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
 downloads_size = os.stat(downloads).st_size
 tick = random.randint(0, 100) / 100
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 # Boot-up
 updateLog(reasons)
