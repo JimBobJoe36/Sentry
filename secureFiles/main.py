@@ -4,6 +4,8 @@ import getpass, random, os # Auto-run "pip install ______"
 from time import sleep
 import subprocess
 import sys
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 try:
     import keyboard
 except ImportError:
@@ -15,8 +17,6 @@ downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles"
 downloads_size = os.stat(downloads).st_size
 tick = random.randint(0, 100) / 100
 
-def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 # Boot-up
 updateLog(reasons)
