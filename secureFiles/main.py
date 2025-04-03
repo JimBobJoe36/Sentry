@@ -11,7 +11,6 @@ def install(package):
 try:
     import keyboard
 except ImportError:
-    print("Keyboard module not found. Installing...")
     install('keyboard')
     try:
         import keyboard
