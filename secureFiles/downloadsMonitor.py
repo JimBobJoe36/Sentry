@@ -1,24 +1,21 @@
 import os
 import getpass
-import subprocess
+import hashlib
+from concurrent.futures import ThreadPoolExecutor
 from fileWriter import updateLog
 
 reasons = "Changed Download"
 
-def get_file_hash(filepath, algorithm="SHA256"):
+def get_file_hash(filepath, algorithm="sha256"):
     try:
-        # Wrap filepath in double quotes to prevent issues with apostrophes
-        result = subprocess.run(
-            ["powershell", "-Command", f'Get-FileHash -Path "{filepath}" -Algorithm {algorithm} | Select-Object -ExpandProperty Hash'],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
+        hash_func = hashlib.new(algorithm)
+        with open(filepath, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hash_func.update(chunk)
+        return hash_func.hexdigest()
+    except Exception as e:
         print(f"Error computing hash for {filepath}: {e}")
         return None
-
 
 def save_downloads_filenames():
     user = getpass.getuser()
@@ -30,10 +27,10 @@ def save_downloads_filenames():
         files = os.listdir(downloads_path)
         
         with open(save_path, "w", encoding="utf-8") as file:
-            for filename in files:
-                file_path = os.path.join(downloads_path, filename)
-                if os.path.isfile(file_path):
-                    file_hash = get_file_hash(file_path)
+            with ThreadPoolExecutor() as executor:
+                file_hashes = executor.map(lambda filename: (filename, get_file_hash(os.path.join(downloads_path, filename))),
+                                           [f for f in files if os.path.isfile(os.path.join(downloads_path, f))])
+                for filename, file_hash in file_hashes:
                     if file_hash:
                         file.write(f"{filename},{file_hash}\n")
         
@@ -55,7 +52,13 @@ def checkDownloads():
                 if len(parts) == 2:
                     saved_files[parts[0]] = parts[1]
         
-        current_files = {f: get_file_hash(os.path.join(downloads_path, f)) for f in os.listdir(downloads_path) if os.path.isfile(os.path.join(downloads_path, f))}
+        current_files = {}
+        with ThreadPoolExecutor() as executor:
+            file_hashes = executor.map(lambda filename: (filename, get_file_hash(os.path.join(downloads_path, filename))),
+                                       [f for f in os.listdir(downloads_path) if os.path.isfile(os.path.join(downloads_path, f))])
+            for filename, file_hash in file_hashes:
+                if file_hash:
+                    current_files[filename] = file_hash
         
         if saved_files != current_files:
             print("It appears you have downloaded a new file or a file has been modified/moved.")
@@ -65,3 +68,4 @@ def checkDownloads():
     except FileNotFoundError:
         print("downloads.txt not found. Creating a new one.")
         save_downloads_filenames()
+
