@@ -4,19 +4,27 @@ import getpass, random, os # Auto-run "pip install ______"
 from time import sleep
 import subprocess
 import sys
+
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
 try:
     import keyboard
 except ImportError:
+    print("Keyboard module not found. Installing...")
     install('keyboard')
-    import keyboard
+    try:
+        import keyboard
+        print("Keyboard module installed successfully.")
+    except ImportError:
+        print("Failed to install the keyboard module.")
+        sys.exit(1)
+
 reasons = "Booted Up"
 user = os.getlogin()
 downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
 downloads_size = os.stat(downloads).st_size
 tick = random.randint(0, 100) / 100
-
 
 # Boot-up
 updateLog(reasons)
@@ -37,4 +45,3 @@ while True:
     if keyboard.is_pressed(']'):  # Checks if the key is pressed
         print("Exit key detected, shutting down.")  # Debug message
         break  # Exit loop
-
