@@ -60,14 +60,13 @@ def checkDownloads():
             for filename, file_hash in file_hashes:
                 if file_hash:
                     current_files[filename] = file_hash
-        
         if saved_files != current_files:
             print("It appears you have downloaded a new file or a file has been modified/moved.")
-            inp = input("Would you like to see the new files/filhashes? [Y] or [N]")
+            inp = input("Would you like to see the new files/filhashes? [Y] or [N] ")
             if inp.lower() == "y":
                 for i in current_files:
                     if i not in saved_files:
-                        differences.append(current_files[i])
+                        differences.append(i)
                 print(differences)
                 print("To compare, open up downloads.txt")
             x = input("Do you want to update downloads.txt? [Y] or [N] ")
