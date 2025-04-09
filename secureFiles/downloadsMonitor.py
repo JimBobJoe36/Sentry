@@ -47,25 +47,28 @@ def checkDownloads():
     
     try:
         with open(save_path, "r", encoding="utf-8") as f:
-            saved_files = {}
+            savedFiles = {}
             for line in f:
                 parts = line.strip().split(",")
                 if len(parts) == 2:
-                    saved_files[parts[0]] = parts[1]
+                    savedFiles[parts[0]] = parts[1]
         
-        current_files = {}
+        currentFiles = {}
         with ThreadPoolExecutor() as executor:
             file_hashes = executor.map(lambda filename: (filename, get_file_hash(os.path.join(downloads_path, filename))),
                                        [f for f in os.listdir(downloads_path) if os.path.isfile(os.path.join(downloads_path, f))])
             for filename, file_hash in file_hashes:
                 if file_hash:
-                    current_files[filename] = file_hash
-        if saved_files != current_files:
+                    currentFiles[filename] = file_hash
+        if savedFiles != currentFiles:
             print("It appears you have downloaded a new file or a file has been modified/moved.")
             inp = input("Would you like to see the new files/filhashes? [Y] or [N] ")
             if inp.lower() == "y":
-                for i in current_files:
-                    if i not in saved_files:
+                for i in currentFiles:
+                    if i not in savedFiles:
+                        differences.append(i)
+                for i in savedFiles:
+                    if i not in currentFiles:
                         differences.append(i)
                 print(differences)
                 print("To compare, open up downloads.txt")
