@@ -4,6 +4,7 @@ import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from fileWriter import updateLog
 inp = ""
+differences = []
 reasons = "Changed Download"
 
 def get_file_hash(filepath, algorithm="sha256"):
@@ -62,9 +63,12 @@ def checkDownloads():
         
         if saved_files != current_files:
             print("It appears you have downloaded a new file or a file has been modified/moved.")
-            inp = input("Would you like to see your current files/filhashes? [y] or [n]")
+            inp = input("Would you like to see the new files/filhashes? [Y] or [N]")
             if inp.lower() == "y":
-                print(current_files)
+                for i in current_files:
+                    if i not in saved_files:
+                        differences.append(current_files[i])
+                print(differences)
                 print("To compare, open up downloads.txt")
             x = input("Do you want to update downloads.txt? [Y] or [N] ")
             if x.lower() == "y":
