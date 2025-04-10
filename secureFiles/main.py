@@ -40,4 +40,6 @@ while True:
     tick = random.randint(0, 100) / 100
     
     if keyboard.is_pressed(']'):
+        reasons = "Powered off"
+        updateLog(reasons)
         break

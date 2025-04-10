@@ -63,6 +63,7 @@ def checkDownloads():
         if savedFiles != currentFiles:
             print("It appears you have downloaded a new file or a file has been modified/moved.")
             inp = input("Would you like to see the new files/filhashes? [Y] or [N] ")
+# Getting the differences between the two...
             if inp.lower() == "y":
                 for i in currentFiles:
                     if i not in savedFiles:
