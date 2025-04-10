@@ -1,6 +1,6 @@
 from fileWriter import updateLog
 from downloadsMonitor import save_downloads_filenames, checkDownloads
-import getpass, random, os # Auto-run "pip install ______"
+import getpass, random, os
 from time import sleep
 import subprocess
 import sys
