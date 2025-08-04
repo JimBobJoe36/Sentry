@@ -9,21 +9,21 @@ inp = ""
 differences = []
 reasons = "Changed Download"
 
-def get_file_hash(filepath, algorithm="sha256"):
+def getFileHash(filepath, algorithm="sha256"):
     try:
-        hash_func = hashlib.new(algorithm)
+        hashFunc = hashlib.new(algorithm)
         with open(filepath, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
-                hash_func.update(chunk)
-        return hash_func.hexdigest()
+                hashFunc.update(chunk)
+        return hashFunc.hexdigest()
     except Exception as e:
         print(f"Error computing hash for {filepath}: {e}")
         return None
 
-def zip_file(filepath, zip_dir):
-    os.makedirs(zip_dir, exist_ok=True)
+def zipFile(filepath, zipDir):
+    os.makedirs(zipDir, exist_ok=True)
     filename = os.path.basename(filepath)
-    zip_path = os.path.join(zip_dir, f"{filename}.zip")
+    zip_path = os.path.join(zipDir, f"{filename}.zip")
     with ZipFile(zip_path, 'w') as zipf:
         zipf.write(filepath, arcname=filename)
     print(f"[INFO] Zipped {filename} to {zip_path}")
@@ -31,25 +31,25 @@ def zip_file(filepath, zip_dir):
     print(f"[INFO] Removed original file: {filename}")
     return zip_path
 
-def unzip_file(zip_path, extract_dir):
+def unzipFile(zip_path, extract_dir):
     with ZipFile(zip_path, 'r') as zipf:
         zipf.extractall(extract_dir)
     print(f"[INFO] Restored file from {zip_path}")
 
-def save_downloads_filenames():
+def saveDownloadsFilenames():
     user = getpass.getuser()
-    downloads_path = os.path.join("C:\\Users", user, "Downloads")
-    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
+    downloadsPath = os.path.join("C:\\Users", user, "Downloads")
+    savePath = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
 
     try:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        files = os.listdir(downloads_path)
+        os.makedirs(os.path.dirname(savePath), exist_ok=True)
+        files = os.listdir(downloadsPath)
 
-        with open(save_path, "w", encoding="utf-8") as file:
+        with open(savePath, "w", encoding="utf-8") as file:
             with ThreadPoolExecutor() as executor:
-                file_hashes = executor.map(lambda filename: (filename, get_file_hash(os.path.join(downloads_path, filename))),
-                                           [f for f in files if os.path.isfile(os.path.join(downloads_path, f))])
-                for filename, file_hash in file_hashes:
+                fileHashes = executor.map(lambda filename: (filename, getFileHash(os.path.join(downloadsPath, filename))),
+                                           [f for f in files if os.path.isfile(os.path.join(downloadsPath, f))])
+                for filename, file_hash in fileHashes:
                     if file_hash:
                         file.write(f"{filename},{file_hash}\n")
 
@@ -60,12 +60,12 @@ def save_downloads_filenames():
 
 def checkDownloads():
     user = getpass.getuser()
-    downloads_path = os.path.join("C:\\Users", user, "Downloads")
-    zip_dir = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "zippedDownloads")
-    save_path = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
+    downloadsPath = os.path.join("C:\\Users", user, "Downloads")
+    zipDir = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "zippedDownloads")
+    savePath = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
 
     try:
-        with open(save_path, "r", encoding="utf-8") as f:
+        with open(savePath, "r", encoding="utf-8") as f:
             savedFiles = {}
             for line in f:
                 parts = line.strip().split(",")
@@ -74,9 +74,9 @@ def checkDownloads():
 
         currentFiles = {}
         with ThreadPoolExecutor() as executor:
-            file_hashes = executor.map(lambda filename: (filename, get_file_hash(os.path.join(downloads_path, filename))),
-                                       [f for f in os.listdir(downloads_path) if os.path.isfile(os.path.join(downloads_path, f))])
-            for filename, file_hash in file_hashes:
+            fileHashes = executor.map(lambda filename: (filename, getFileHash(os.path.join(downloadsPath, filename))),
+                                       [f for f in os.listdir(downloadsPath) if os.path.isfile(os.path.join(downloadsPath, f))])
+            for filename, file_hash in fileHashes:
                 if file_hash:
                     currentFiles[filename] = file_hash
 
@@ -91,9 +91,9 @@ def checkDownloads():
                     differences.append(i)
 
             for filename in differences:
-                full_path = os.path.join(downloads_path, filename)
+                full_path = os.path.join(downloadsPath, filename)
                 if os.path.exists(full_path):
-                    zip_file(full_path, zip_dir)
+                    zipFile(full_path, zipDir)
 
             inp = input("Show differences? [Y/N]: ")
             if inp.lower() == "y": 
@@ -102,14 +102,14 @@ def checkDownloads():
             # Unzip all files back if user approves
             restore = input("Restore (unzip) all secured files back to Downloads? [Y/N]: ")
             if restore.lower() == "y":
-                for zfile in os.listdir(zip_dir):
+                for zfile in os.listdir(zipDir):
                     if zfile.endswith(".zip"):
-                        unzip_file(os.path.join(zip_dir, zfile), downloads_path)
+                        unzipFile(os.path.join(zipDir, zfile), downloadsPath)
 
             x = input("Update downloads.txt with new file states? [Y/N]: ")
             if x.lower() == "y":
-                save_downloads_filenames()
+                saveDownloadsFilenames()
 
     except FileNotFoundError:
         print("[WARN] downloads.txt not found. Creating a new one.")
-        save_downloads_filenames()
+        saveDownloadsFilenames()

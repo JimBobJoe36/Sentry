@@ -1,5 +1,5 @@
 from fileWriter import updateLog
-from downloadsMonitor import save_downloads_filenames, checkDownloads
+from downloadsMonitor import saveDownloadsFilenames, checkDownloads
 import getpass, random, os
 from time import sleep
 import subprocess
@@ -28,7 +28,7 @@ downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles"
 # Handle first-time run
 if not os.path.exists(downloads) or os.stat(downloads).st_size < 2:
     print("[INFO] No trusted downloads file found or file is empty. Saving current downloads state.")
-    save_downloads_filenames()
+    saveDownloadsFilenames()
 else:
     print(f"Welcome back, {user}!")
     checkDownloads()
