@@ -1,13 +1,16 @@
 from fileWriter import updateLog
 from downloadsMonitor import saveDownloadsFilenames, checkDownloads
-import getpass, random, os
+import random
+import os
 from time import sleep
 import subprocess
 import sys
 
+
 # -------------Keyboard Installation Process--------------------
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
 
 try:
     import keyboard
@@ -23,11 +26,19 @@ except ImportError:
 # ---------------Starter Variable Setup---------------
 reasons = "Booted Up"
 user = os.getlogin()
-downloads = os.path.join("C:\\Users", user, "Documents", "Sentry", "secureFiles", "trustedLogs", "downloads.txt")
+downloads = os.path.join(
+    "C:\\Users",
+    user,
+    "Documents",
+    "Sentry",
+    "secureFiles",
+    "trustedLogs",
+    "downloads.txt")
 
 # Handle first-time run
 if not os.path.exists(downloads) or os.stat(downloads).st_size < 2:
-    print("[INFO] No trusted downloads file found or file is empty. Saving current downloads state.")
+    print("[INFO] No trusted downloads file found or file is empty."
+          "Saving current downloads state.")
     saveDownloadsFilenames()
 else:
     print(f"Welcome back, {user}!")
@@ -42,4 +53,3 @@ while True:
     if keyboard.is_pressed(']'):
         updateLog("Powered off")
         break
-
