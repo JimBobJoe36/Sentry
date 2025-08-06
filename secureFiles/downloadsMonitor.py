@@ -4,6 +4,7 @@ import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from zipfile import ZipFile
 from fileWriter import updateLog
+from plyer import notification
 
 inp = ""
 differences = []
@@ -30,6 +31,13 @@ def zipFile(filepath, zipDir):
     os.remove(filepath)
     print(f"[INFO] Removed original file: {filename}")
     return zip_path
+
+def sendNotification(header, messContent):
+    notification.notify(
+        title = header,
+        message = messContent,
+        timeout = 10
+    )
 
 def unzipFile(zip_path, extract_dir):
     with ZipFile(zip_path, 'r') as zipf:
@@ -82,6 +90,8 @@ def checkDownloads():
 
         if savedFiles != currentFiles:
             print("[NOTICE] New or changed downloads detected.")
+            sendNotification("[NOTICE] Action Needed", "We found new files in your downloads, please interact with Sentry.")
+            updateLog("Notification sent")
             
             for i in currentFiles:
                 if i not in savedFiles:
