@@ -37,9 +37,9 @@ def zipFile(filepath, zipDir):
 
 def sendNotification(header, messContent):
     notification.notify(
-        title = header,
-        message = messContent,
-        timeout = 10
+        title=header,
+        message=messContent,
+        timeout=10
     )
 
 
@@ -130,11 +130,13 @@ def checkDownloads():
                     currentFiles[filename] = file_hash
 
         if savedFiles != currentFiles:
-            print("[NOTICE] New or changed downloads detected.")
+            print("[INFO] New or changed downloads detected.")
 
-            sendNotification("[NOTICE] Action Needed", "We found new files in your downloads, please interact with Sentry.")
+            sendNotification("[INFO] Action Needed",
+                             "We found new files in your downloads, "
+                             "please interact with Sentry.")
             updateLog("Notification sent")
-            
+
             for i in currentFiles:
                 if i not in savedFiles:
                     differences.append(i)
@@ -151,7 +153,6 @@ def checkDownloads():
             if inp.lower() == "y":
                 print("Changed files:", differences)
 
-            # Unzip all files back if user approves
             restore = input("Restore (unzip) all secured files back to "
                             "Downloads? [Y/N]: ")
             if restore.lower() == "y":

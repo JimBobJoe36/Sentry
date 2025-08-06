@@ -7,23 +7,20 @@ import subprocess
 import sys
 
 
-# -------------Keyboard Installation Process--------------------
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 
-try:
-    pass
-    # import plyer
-except ImportError:
-    install('plyer')
+pkgs = ["keyboard", "plyer"]
+
+for pkg in pkgs:
     try:
-        import keyboard
-        print("Notification module installed successfully.")
-    except ImportError:
-        print("Failed to install the notification module.")
+        install(pkg)
+    except Exception as e:
+        print(f"Could not install {pkg}: {e}")
         sys.exit(1)
-# ---------------Starter Variable Setup---------------
+
+
 reasons = "Booted Up"
 user = os.getlogin()
 downloads = os.path.join(
@@ -40,14 +37,14 @@ if not os.path.exists(downloads) or os.stat(downloads).st_size < 2:
     print("[INFO] No trusted downloads file found or file is empty."
           "Saving current downloads state.")
     saveDownloadsFilenames()
+    import keyboard
 else:
     print(f"Welcome back, {user}!")
     checkDownloads()
 
-# ---------------Main Process---------------
 while True:
     checkDownloads()
-    tick = random.uniform(0.1, 1.0)  # Wait between 0.1s and 1s
+    tick = random.uniform(0.1, 1.0)
     sleep(tick)
 
     if keyboard.is_pressed(']'):
