@@ -2,11 +2,9 @@ from fileWriter import updateLog
 from downloadsMonitor import saveDownloadsFilenames, checkDownloads
 import random
 import os
-import random, os
 from time import sleep
 import subprocess
 import sys
-from plyer import notification
 
 
 # -------------Keyboard Installation Process--------------------
@@ -15,18 +13,8 @@ def install(package):
 
 
 try:
-    import keyboard
-except ImportError:
-    install('keyboard')
-    try:
-        import keyboard
-        print("Keyboard module installed successfully.")
-    except ImportError:
-        print("Failed to install the keyboard module.")
-        sys.exit(1)
-
-try:
-    import plyer
+    pass
+    # import plyer
 except ImportError:
     install('plyer')
     try:
