@@ -20,7 +20,7 @@ def getFileHash(filepath, algorithm="sha256"):
         return hashFunc.hexdigest()
     except Exception as e:
         print(f"Error computing hash for {filepath}: {e}")
-        return None
+        return 1
 
 
 def zipFile(filepath, zipDir):
