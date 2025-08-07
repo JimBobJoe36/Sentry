@@ -18,3 +18,7 @@ To terminate the program, either press and hold "]", terminate Powershell, or ki
 1.1.1 -- <s>Successfully prevents unwanted downloads (hopefully pauses the moment it realizes)</s> **Current Version**
 
 2.0.0 -- Has a GUI for easy access and control
+
+# Contributors
+JimBobJoe36 <br>
+Gwizzle651
