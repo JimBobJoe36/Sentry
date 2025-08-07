@@ -20,5 +20,5 @@ To terminate the program, either press and hold "]", terminate Powershell, or ki
 2.0.0 -- Has a GUI for easy access and control
 
 # Contributors
-JimBobJoe36
+JimBobJoe36 <br>
 Gwizzle651
