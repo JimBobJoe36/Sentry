@@ -9,7 +9,13 @@ import sys
 
 # -------------Keyboard Installation Process--------------------
 def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    subprocess.check_call([
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "-qqq",
+        package])
 
 
 pkgs = {"keyboard", "plyer"}
