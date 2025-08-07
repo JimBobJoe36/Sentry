@@ -19,6 +19,7 @@ for pkg in pkgs:
         install(pkg)
     except Exception as e:
         print(f"Could not install {pkg}: {e}")
+        updateLog(f"[Error] Could not install {pkg}")
         sys.exit(1)
 
 try:
@@ -27,7 +28,7 @@ except ImportError:
     print("Could not import the keyboard module.")
 
 # ---------------Starter Variable Setup---------------
-reasons = "Booted Up"
+updateLog("Booted Up")
 user = os.getlogin()
 downloads = os.path.join(
     "C:\\Users",
