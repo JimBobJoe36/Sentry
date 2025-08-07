@@ -6,7 +6,7 @@ from time import sleep
 import subprocess
 import sys
 
-
+# -------------Keyboard Installation Process--------------------
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
@@ -20,7 +20,7 @@ for pkg in pkgs:
         print(f"Could not install {pkg}: {e}")
         sys.exit(1)
 
-
+# ---------------Starter Variable Setup---------------
 reasons = "Booted Up"
 user = os.getlogin()
 downloads = os.path.join(
@@ -41,6 +41,8 @@ if not os.path.exists(downloads) or os.stat(downloads).st_size < 2:
 else:
     print(f"Welcome back, {user}!")
     checkDownloads()
+
+# ---------------Main Process---------------
 
 while True:
     checkDownloads()
