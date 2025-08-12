@@ -5,7 +5,7 @@ import os
 from time import sleep
 import subprocess
 import sys
-
+import importlib
 
 # -------------Keyboard Installation Process--------------------
 def install(package):
@@ -22,11 +22,14 @@ pkgs = {"keyboard", "plyer"}
 
 for pkg in pkgs:
     try:
-        install(pkg)
-    except Exception as e:
-        print(f"Could not install {pkg}: {e}")
-        updateLog(f"[Error] Could not install {pkg}")
-        sys.exit(1)
+        importlib.import_module(pkg)
+    except Exception:
+        try:
+            install(pkg)
+        except Exception as e:
+            print(f"Could not install {pkg}: {e}")
+            updateLog(f"[Error] Could not install {pkg}")
+            sys.exit(1)
 
 try:
     import keyboard
